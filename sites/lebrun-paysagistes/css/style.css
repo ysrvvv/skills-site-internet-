@@ -2825,3 +2825,135 @@ fieldset.field {
 .section--surface .faq details {
   background: var(--bg);
 }
+
+/* ---------- Ordinateur : mise en page plus compacte ---------- */
+
+@media (min-width: 900px) {
+  .section {
+    padding-block: clamp(56px, 4.2vw, 72px);
+  }
+
+  .section--tight {
+    padding-block: clamp(36px, 2.8vw, 48px);
+  }
+
+  .section-head {
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .hero {
+    padding-block: 36px 64px;
+  }
+
+  .hero h1 {
+    margin-bottom: 20px;
+  }
+
+  .hero .lead {
+    margin-bottom: 26px;
+  }
+
+  .hero-meta {
+    margin-top: 26px;
+    padding-top: 20px;
+  }
+
+  .page-hero {
+    padding-block: 28px 56px;
+  }
+
+  .page-hero h1 {
+    margin-bottom: 18px;
+  }
+
+  .page-hero .lead {
+    margin-bottom: 24px;
+  }
+
+  .breadcrumb {
+    margin-bottom: 18px;
+  }
+
+  .fact {
+    padding-block: 22px;
+  }
+
+  .feature,
+  .step {
+    padding: 28px;
+  }
+
+  .step::before {
+    margin-bottom: 6px;
+  }
+
+  .split-body h2 {
+    margin-bottom: 16px;
+  }
+
+  .split-body .lead {
+    margin-bottom: 16px;
+  }
+
+  .check-list {
+    margin: 20px 0 24px;
+  }
+
+  .timeline li {
+    padding-bottom: 22px;
+  }
+
+  .rating-band {
+    padding: 40px 48px;
+  }
+
+  .cta-band {
+    padding: 52px 64px;
+  }
+
+  .season {
+    padding: 24px 24px 26px;
+  }
+
+  .offer {
+    padding: 34px;
+  }
+
+  .form-card {
+    padding: 40px;
+  }
+
+  .site-footer {
+    margin-top: 16px;
+    padding-top: 56px;
+  }
+
+  .footer-bottom {
+    margin-top: 40px;
+  }
+
+  .split {
+    gap: clamp(36px, 4vw, 64px);
+  }
+
+  .split-media img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .split-media--tall img {
+    aspect-ratio: 1 / 1.08;
+  }
+
+  .prose h2 {
+    margin: 40px 0 14px;
+  }
+
+  .storm-card-call {
+    margin-top: 24px;
+  }
+}
