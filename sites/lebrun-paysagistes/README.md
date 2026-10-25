@@ -13,8 +13,9 @@ Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce
 | Accueil | `index.html` |
 | Élagage & abattage | `elagage-abattage.html` |
 | Entretien de jardin (formules, calendrier mois par mois) | `entretien-jardin.html` |
-| Plantations & remise en état | `plantations.html` |
-| L'entreprise (histoire 1975 → 2024, engagements, zone) | `entreprise.html` |
+| Aménagements (plantations, clôtures, remise en état) | `plantations.html` |
+| Réalisations (6 vrais chantiers issus de leur Instagram) | `realisations.html` |
+| L'entreprise (de père en fils, histoire 1975 → 2024, engagements, zone) | `entreprise.html` |
 | Contact & devis (formulaire, horaires « ouvert/fermé » en direct) | `contact.html` |
 | Mentions légales | `mentions-legales.html` |
 | Page 404 | `404.html` |
@@ -29,15 +30,18 @@ Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce
 | Téléphones | 06 59 92 74 97 (Google) · 01 30 50 14 52 (Pages Jaunes) | Google Maps, Pages Jaunes |
 | Horaires | Lundi–vendredi 8 h–17 h | Paysagisteo / Google |
 | Société | SARL, SIREN 937 605 046, créée le 1er juin 2024, gérant Jean-Michel Lebrun, APE 81.30Z, TVA FR32937605046 | recherche-entreprises.api.gouv.fr, Paysagisteo |
+| Instagram | @lebrun.paysagistes : bio « Lebrun Paysagistes 78 - De père en fils depuis 1975 », 34 publications, 193 abonnés | Widget public d'intégration Instagram |
+| Logo | Arbre + « LEBRUN PAYSAGISTES — DEPUIS 1975 » | Photo de profil Instagram, vectorisée (`img/logo-arbre.svg`) |
+| Photos de chantiers | Élagage en nacelle (résidence, ~100 arbres tous les 2 ans), évacuation du gros bois, haie de thuyas, tonte et contrat annuel, clôture à la place d'une haie, olivier avant sa taille en boule | 6 dernières publications Instagram |
 | Historique | Entreprise individuelle de Jean Lebrun immatriculée en 1990 (Plaisir), à Maurepas de 2002 à 2020, puis Saint-Germain-de-la-Grange ; apport du fonds à la SARL en 2024 | Societe.com |
 
 ## À valider avec le client avant la mise en ligne
 
-- **Photos** : ce sont des photos libres de droits (CC0) d'illustration. Les remplacer par des photos de leurs chantiers est le meilleur argument de vente.
+- **Photos et logo** : les 6 photos de chantiers (`img/chantier-*.jpg`) et le logo viennent de leur Instagram. Il reste 4 photos d'illustration libres de droits (`canopee-automne`, `feuilles-chene`, `feuilles-rateau`, `allee-jardin`) à remplacer par d'autres photos de chantiers. Seule une version 100 px du logo était accessible : il a été vectorisé, mais il faut demander le fichier original.
 - **Avis clients** : le site affiche la note réelle (4,9/5, 41 avis) et renvoie vers Google. Avec l'accord du client, on peut y ajouter 3 ou 4 avis Google cités mot pour mot.
-- **Prestations** : élagage, abattage et entretien sont confirmés par leurs fiches. *Démontage par sections, dessouchage, plantations, débroussaillage, bois laissé en bûches, évacuation des déchets verts, devis gratuit* sont des prestations courantes du métier, à confirmer.
+- **Prestations** : confirmées par leurs fiches et leur Instagram : élagage (dont en nacelle), abattage, évacuation du gros bois, taille de haies, tonte, contrats d'entretien annuels (particuliers et entreprises), clôture à la place d'une haie, taille d'olivier. À confirmer : *démontage par sections, dessouchage, plantations, débroussaillage, bois laissé en bûches, devis gratuit*.
 - **Zone d'intervention** : communes voisines proposées par défaut, à ajuster.
-- **Historique** : « 1975 » vient de leur fiche Google. Les dates 1990, 2002, 2020 et 2024 viennent du registre des entreprises.
+- **Historique** : « 1975 » et « de père en fils » viennent de leur fiche Google et de leur bio Instagram. Les dates 1990, 2002, 2020 et 2024 viennent du registre des entreprises. Que Jean Lebrun soit le père et Jean-Michel le fils est une déduction (même nom, reprise du fonds, « de père en fils ») : à confirmer.
 - **E-mail** : aucune adresse trouvée en ligne. À demander pour brancher le formulaire.
 
 ## Mise en ligne officielle (après accord)
@@ -51,5 +55,6 @@ Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce
 
 - Aucun site aujourd'hui : un prospect qui cherche « élagueur Plaisir » ou « élagage Yvelines » sur Google trouve des concurrents qui en ont un.
 - 41 avis à 4,9/5 : une excellente réputation qui ne travaille pas encore pour eux en dehors de Google Maps.
+- Ils publient déjà de belles photos de chantiers sur Instagram (34 publications) : le site les met en valeur et les rend trouvables sur Google.
 - Tempête Austen (octobre 2026) : forte demande d'élagage et de mises en sécurité dans les Yvelines. La page élagage a un encart « Après un coup de vent ».
 - Barre d'appel fixe sur mobile, formulaire avec envoi de photos, horaires « ouvert / fermé » en direct, données structurées pour le référencement local.
