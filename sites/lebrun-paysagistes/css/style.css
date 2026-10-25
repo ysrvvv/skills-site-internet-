@@ -1709,7 +1709,25 @@ em.accent,
 .faq {
   display: grid;
   gap: 12px;
-  max-width: 880px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .faq {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+
+.faq-col {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .faq-col {
+    gap: 16px;
+  }
 }
 
 .faq details {
