@@ -430,8 +430,9 @@ em.accent,
 }
 
 .brand-mark {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 47px;
+  flex: none;
 }
 
 .brand-text {
@@ -440,11 +441,17 @@ em.accent,
 }
 
 .brand-name {
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  font-variation-settings: "opsz" 48;
+  font-family: var(--font-body);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2f3a31;
+}
+
+.site-footer .brand-name,
+.site-footer .brand {
+  color: var(--cream);
 }
 
 .brand-sub {
@@ -569,12 +576,12 @@ em.accent,
   }
 
   .brand-mark {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 41px;
   }
 
   .brand-name {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
   }
 }
 
@@ -2450,7 +2457,7 @@ fieldset.field {
   letter-spacing: -0.05em;
 }
 
-@media (min-width: 1141px) and (max-width: 1300px) {
+@media (min-width: 1141px) {
   .header-phone {
     display: none;
   }
@@ -2506,4 +2513,297 @@ fieldset.field {
   color: var(--cream);
   font: 600 0.875rem/1 var(--font-body);
   cursor: pointer;
+}
+
+/* ---------- Barre d'informations (bureau) ---------- */
+
+.topbar {
+  display: none;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 1141px) {
+  .topbar {
+    display: block;
+  }
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 40px;
+}
+
+.topbar-inner > * {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.topbar-inner > :nth-child(3) {
+  margin-left: auto;
+}
+
+.topbar .icon {
+  width: 15px;
+  height: 15px;
+  color: var(--moss);
+}
+
+.topbar a {
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.topbar strong {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .topbar a:hover {
+    color: var(--forest-2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.mobile-menu-hours a {
+  color: inherit;
+}
+
+/* ---------- Étiquette photo ---------- */
+
+.photo-tag {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(23, 35, 27, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.photo-tag .icon {
+  width: 15px;
+  height: 15px;
+}
+
+@media (min-width: 960px) {
+  .photo-tag {
+    top: auto;
+    bottom: 104px;
+    left: 18px;
+  }
+}
+
+.split-media figcaption a {
+  color: var(--forest-2);
+}
+
+/* ---------- Grille Instagram (accueil) ---------- */
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+@media (min-width: 900px) {
+  .insta-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+  }
+}
+
+.insta-tile {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-m);
+  overflow: hidden;
+  background: var(--surface-2);
+  transition: transform 160ms var(--ease-out);
+}
+
+.insta-tile:active {
+  transform: scale(0.98);
+}
+
+.insta-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms var(--ease-out);
+}
+
+.insta-tile-label {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.92);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .insta-tile:hover img {
+    transform: scale(1.04);
+  }
+}
+
+/* ---------- Réalisations ---------- */
+
+.work-grid {
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 700px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .work-card--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1040px) {
+  .work-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.work-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-l);
+  background: var(--surface);
+  box-shadow: var(--shadow-s);
+  overflow: hidden;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+
+.work-card-media {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.work-card--wide .work-card-media {
+  aspect-ratio: 1080 / 566;
+}
+
+.work-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.work-card-body {
+  display: grid;
+  gap: 10px;
+  padding: 22px 24px 26px;
+}
+
+.work-card-body h2 {
+  font-size: clamp(1.25rem, 0.6vw + 1rem, 1.5rem);
+  line-height: 1.2;
+  font-variation-settings: "opsz" 36;
+}
+
+.work-card-body p {
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.work-card-tag {
+  justify-self: start;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.work-card--insta {
+  justify-content: center;
+  gap: 16px;
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--forest);
+  color: var(--cream);
+  text-decoration: none;
+  box-shadow: none;
+  transition: transform 160ms var(--ease-out);
+}
+
+.work-card--insta:active {
+  transform: scale(0.99);
+}
+
+.work-card--insta h2 {
+  font-size: clamp(1.6rem, 1.2vw + 1.1rem, 2.2rem);
+}
+
+.work-card--insta p {
+  color: rgba(246, 242, 234, 0.78);
+}
+
+.work-card--insta .link-arrow {
+  color: var(--sage);
+}
+
+.work-card-insta-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(246, 242, 234, 0.1);
+}
+
+.work-card-insta-icon .icon {
+  width: 28px;
+  height: 28px;
+}
+
+/* ---------- Divers ---------- */
+
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  color: var(--cream);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-social:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.section--surface .faq details {
+  background: var(--bg);
 }
