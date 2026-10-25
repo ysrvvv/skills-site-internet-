@@ -1,0 +1,4 @@
+# Maquette de démonstration : non indexée.
+# À la mise en ligne officielle, remplacer par « Allow: / ».
+User-agent: *
+Disallow: /
