@@ -11,9 +11,14 @@
   var header = document.querySelector("[data-header]");
   var sentinel = document.querySelector("[data-header-sentinel]");
   if (header && sentinel && "IntersectionObserver" in window) {
-    new IntersectionObserver(function (entries) {
-      header.classList.toggle("is-scrolled", !entries[0].isIntersecting);
-    }).observe(sentinel);
+    // Sur iPhone, l'en-tête se colle sous la barre d'état : on décale la zone observée d'autant.
+    var inset = parseFloat(getComputedStyle(document.body).paddingTop) || 0;
+    new IntersectionObserver(
+      function (entries) {
+        header.classList.toggle("is-scrolled", !entries[0].isIntersecting);
+      },
+      { rootMargin: -inset + "px 0px 0px 0px" }
+    ).observe(sentinel);
   }
 
   /* ---------- Menu mobile ---------- */
