@@ -4,9 +4,18 @@ Maquette de site vitrine réalisée pour être proposée à **Lebrun Paysagistes
 d'abattage et d'entretien de jardins qui **n'a aucun site internet** (fiche Google sans lien « Site Web »,
 annuaires sans site).
 
-Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce dossier.
+Site statique (HTML/CSS/JS, sans dépendance ni build) dans `public/`, plus une fonction Netlify pour le formulaire
+de devis (`netlify/functions/devis.mjs`). Seul `public/` est publié : ce README et le code de la fonction restent privés.
 
-## Pages
+```
+sites/lebrun-paysagistes/
+├── public/                  ← le site (pages, css, js, img)
+├── netlify/functions/devis.mjs   ← envoi des demandes par e-mail
+├── netlify.toml
+└── README.md                ← notes internes, non publiées
+```
+
+## Pages (dans `public/`)
 
 | Page | Fichier |
 | --- | --- |
@@ -35,6 +44,29 @@ Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce
 | Photos de chantiers | Élagage en nacelle (résidence, ~100 arbres tous les 2 ans), évacuation du gros bois, haie de thuyas, tonte et contrat annuel, clôture à la place d'une haie, olivier avant sa taille en boule | 6 dernières publications Instagram |
 | Historique | Entreprise individuelle de Jean Lebrun immatriculée en 1990 (Plaisir), à Maurepas de 2002 à 2020, puis Saint-Germain-de-la-Grange ; apport du fonds à la SARL en 2024 | Societe.com |
 
+## Réception des demandes de devis par e-mail
+
+Le formulaire (`public/contact.html`) envoie les demandes à `/api/devis` (fonction `devis.mjs`), qui envoie un e-mail HTML
+aux couleurs de Lebrun via [Resend](https://resend.com) : nom, téléphone cliquable, commune, besoin, message, photos en
+pièces jointes, boutons « Appeler » et « Répondre ». Si le client a donné son e-mail, il est en « répondre à ».
+Photos réduites à 1600 px côté navigateur ; 3 photos maximum ; champ piège anti-robots ; 6 envois par minute et par IP.
+
+**Configuration (une seule fois)** : dans Netlify, *Project configuration → Environment variables* (portée « Functions »),
+puis redéployer :
+
+| Variable | Valeur |
+| --- | --- |
+| `RESEND_API_KEY` | clé d'API créée sur resend.com (*API Keys*) — secrète |
+| `DEVIS_TO_EMAIL` | adresse qui reçoit les demandes (plusieurs possibles, séparées par des virgules) |
+| `DEVIS_FROM` | *facultatif* : expéditeur, par ex. `Lebrun Paysagistes <devis@lebrun-paysagistes.fr>` |
+
+Sans domaine vérifié sur Resend, l'expéditeur est `onboarding@resend.dev` et **Resend n'accepte alors que l'adresse du
+compte Resend comme destinataire** : pour la démo, `DEVIS_TO_EMAIL` doit être l'adresse d'inscription à Resend. Pour envoyer
+à l'adresse de Lebrun, vérifier un domaine dans Resend (*Domains*) et renseigner `DEVIS_FROM`.
+
+Tant que ces variables ne sont pas définies, le formulaire affiche « L'envoi des demandes n'est pas encore activé ».
+Les erreurs d'envoi sont visibles dans Netlify → *Logs → Functions → devis*.
+
 ## À valider avec le client avant la mise en ligne
 
 - **Photos et logo** : les 6 photos de chantiers (`img/chantier-*.jpg`) et le logo viennent de leur Instagram. Il reste 4 photos d'illustration libres de droits (`canopee-automne`, `feuilles-chene`, `feuilles-rateau`, `allee-jardin`) à remplacer par d'autres photos de chantiers. Seule une version 100 px du logo était accessible : il a été vectorisé, mais il faut demander le fichier original.
@@ -46,9 +78,9 @@ Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce
 
 ## Mise en ligne officielle (après accord)
 
-1. Supprimer la balise `<meta name="robots" content="noindex, nofollow">` de chaque page, l'en-tête `X-Robots-Tag` dans `netlify.toml` et remplacer `Disallow: /` par `Allow: /` dans `robots.txt`.
+1. Supprimer la balise `<meta name="robots" content="noindex, nofollow">` de chaque page, l'en-tête `X-Robots-Tag` dans `netlify.toml` et remplacer `Disallow: /` par `Allow: /` dans `public/robots.txt`.
 2. Retirer le bandeau « Maquette de démonstration » (`.demo-bar`) et la note du formulaire (`.demo-note`).
-3. Formulaire : ajouter `name="devis" data-netlify="true"` sur la balise `<form>` de `contact.html` et retirer le `e.preventDefault()` de démo dans `js/main.js` (ou brancher un service d'envoi d'e-mail).
+3. Formulaire : faire pointer `DEVIS_TO_EMAIL` vers l'adresse de Lebrun (avec un domaine vérifié sur Resend, voir ci-dessus) et retirer la phrase « cette demande a été reçue par l'équipe qui réalise la maquette » du message de confirmation (`.demo-note` dans `public/contact.html`).
 4. Brancher le nom de domaine (ex. `lebrun-paysagistes.fr`) et créer/compléter la fiche Google avec le lien du site.
 
 ## Arguments de vente
@@ -57,4 +89,4 @@ Site statique (HTML/CSS/JS, sans dépendance ni build) : il suffit de publier ce
 - 41 avis à 4,9/5 : une excellente réputation qui ne travaille pas encore pour eux en dehors de Google Maps.
 - Ils publient déjà de belles photos de chantiers sur Instagram (34 publications) : le site les met en valeur et les rend trouvables sur Google.
 - Tempête Austen (octobre 2026) : forte demande d'élagage et de mises en sécurité dans les Yvelines. La page élagage a un encart « Après un coup de vent ».
-- Barre d'appel fixe sur mobile, formulaire avec envoi de photos, horaires « ouvert / fermé » en direct, données structurées pour le référencement local.
+- Barre d'appel fixe sur mobile, formulaire avec envoi de photos, e-mail de devis soigné (téléphone cliquable, photos jointes), horaires « ouvert / fermé » en direct, données structurées pour le référencement local.

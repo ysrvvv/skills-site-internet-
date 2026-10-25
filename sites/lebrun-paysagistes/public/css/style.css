@@ -3020,3 +3020,61 @@ body::before {
 html {
   scroll-padding-top: calc(var(--header-h) + 16px + env(safe-area-inset-top));
 }
+
+/* ---------- Formulaire : envoi, erreurs, champ piège ---------- */
+
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-error {
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #fbe9e4;
+  color: #8a2f1a;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.form-error[hidden] {
+  display: none;
+}
+
+.consent {
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.75;
+  cursor: progress;
+}
+
+.btn[aria-busy="true"] .icon {
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  animation: spin 700ms linear infinite;
+}
+
+.btn[aria-busy="true"] .icon path {
+  display: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn[aria-busy="true"] .icon {
+    animation-duration: 1800ms;
+  }
+}

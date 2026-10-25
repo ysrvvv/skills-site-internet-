@@ -17,9 +17,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&amp;display=swap">
-<link rel="stylesheet" href="css/style.css?v=9dfd95da">
+<link rel="stylesheet" href="css/style.css?v=b4e31b5a">
 <script>document.documentElement.classList.add("js")</script>
-<script src="js/main.js?v=950f6e89" defer></script>
+<script src="js/main.js?v=e79f925d" defer></script>
 
 </head>
 <body>
@@ -80,7 +80,7 @@
 <section class="section--tight" style="padding-top:0">
   <div class="container contact-grid">
     <div class="form-card" data-reveal>
-      <form data-quote-form novalidate>
+      <form data-quote-form action="/api/devis" method="post" enctype="multipart/form-data" novalidate>
         <h2>Demande de devis</h2>
         <p style="color:var(--ink-soft);margin-bottom:28px">Les champs marqués d’un astérisque sont nécessaires pour vous répondre.</p>
         <div class="form-grid">
@@ -115,15 +115,23 @@
           </div>
           <div class="field full">
             <label for="photos">Photos <span class="optional">(facultatif)</span></label>
-            <input id="photos" name="photos" type="file" accept="image/*" multiple>
-            <span class="field-hint">Une ou deux photos de l’arbre ou du jardin nous aident à préparer la visite.</span>
+            <input id="photos" name="photos" type="file" accept="image/*" multiple data-max-files="3">
+            <span class="field-hint">Jusqu’à 3 photos de l’arbre ou du jardin : elles nous aident à préparer la visite.</span>
+            <span class="field-error" hidden></span>
           </div>
-          <label class="consent full">
-            <input type="checkbox" name="consentement" required>
-            <span>J’accepte que mes informations soient utilisées pour répondre à ma demande. Elles ne seront jamais transmises à des tiers. <a href="mentions-legales.html#donnees">En savoir plus</a></span>
-          </label>
+          <div class="hp" aria-hidden="true">
+            <label>Ne pas remplir ce champ<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+          <div class="field full">
+            <label class="consent">
+              <input type="checkbox" name="consentement" data-required>
+              <span>J’accepte que mes informations soient utilisées pour répondre à ma demande. Elles ne seront jamais transmises à des tiers. <a href="mentions-legales.html#donnees">En savoir plus</a></span>
+            </label>
+            <span class="field-error" hidden></span>
+          </div>
+          <p class="form-error full" role="alert" data-form-error hidden></p>
           <div class="form-actions full">
-            <button class="btn btn-accent" type="submit">Envoyer ma demande <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+            <button class="btn btn-accent" type="submit" data-submit><span data-submit-label>Envoyer ma demande</span> <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
             <small>Réponse rapide, du lundi au vendredi.</small>
           </div>
         </div>
@@ -132,7 +140,7 @@
         <span class="form-success-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
         <h2>Merci<span data-success-name></span>&nbsp;!</h2>
         <p>Votre demande est bien prise en compte. Nous vous rappelons rapidement pour convenir d’une visite.</p>
-        <p class="demo-note"><strong>Maquette de démonstration :</strong> ce formulaire n’envoie encore aucun message. Une fois le site en ligne, chaque demande arrivera directement dans votre boîte e-mail.</p>
+        <p class="demo-note"><strong>Maquette de démonstration :</strong> cette demande a été reçue par l’équipe qui réalise la maquette, pas par Lebrun Paysagistes.</p>
         <a class="link-arrow" href="index.html">Retour à l’accueil <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
       </div>
     </div>

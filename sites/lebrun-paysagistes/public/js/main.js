@@ -166,10 +166,16 @@
     el.textContent = new Date().getFullYear();
   });
 
-  /* ---------- Formulaire de devis (démo) ---------- */
+  /* ---------- Formulaire de devis ---------- */
   var form = document.querySelector("[data-quote-form]");
   if (form) {
     var success = document.querySelector("[data-form-success]");
+    var formError = form.querySelector("[data-form-error]");
+    var submitBtn = form.querySelector("[data-submit]");
+    var submitLabel = form.querySelector("[data-submit-label]");
+    var photosInput = form.querySelector("#photos");
+    var MAX_PHOTOS = 3;
+    var PHONE = "06 59 92 74 97";
 
     var showError = function (input, message) {
       var holder = input.closest(".field");
@@ -187,37 +193,125 @@
       form.querySelectorAll("[data-required]").forEach(function (input) {
         var value = input.value.trim();
         var message = "";
-        if (!value) message = "Ce champ est nécessaire pour vous répondre.";
+        if (input.type === "checkbox") {
+          if (!input.checked) message = "Cochez la case pour que nous puissions vous répondre.";
+        } else if (!value) message = "Ce champ est nécessaire pour vous répondre.";
         else if (input.type === "tel" && value.replace(/\D/g, "").length < 10)
           message = "Vérifiez le numéro : 10 chiffres attendus.";
-        else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
-          message = "Cette adresse e-mail semble incomplète.";
         showError(input, message);
         if (message) {
           ok = false;
           if (!first) first = input;
         }
       });
+      var email = form.querySelector("#email");
+      var emailMessage =
+        email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())
+          ? "Cette adresse e-mail semble incomplète."
+          : "";
+      showError(email, emailMessage);
+      if (emailMessage) {
+        ok = false;
+        if (!first) first = email;
+      }
+      var tooMany = photosInput.files.length > MAX_PHOTOS;
+      showError(photosInput, tooMany ? MAX_PHOTOS + " photos au maximum : retirez-en une ou deux." : "");
+      if (tooMany) {
+        ok = false;
+        if (!first) first = photosInput;
+      }
       if (first) first.focus();
       return ok;
     };
 
-    form.querySelectorAll("[data-required]").forEach(function (input) {
-      input.addEventListener("input", function () {
+    form.querySelectorAll("[data-required], #email, #photos").forEach(function (input) {
+      var clear = function () {
         if (input.getAttribute("aria-invalid") === "true") showError(input, "");
-      });
+      };
+      input.addEventListener("input", clear);
+      input.addEventListener("change", clear);
     });
 
-    form.addEventListener("submit", function (e) {
+    // Réduit chaque photo (1600 px, JPEG) : une photo de téléphone pèse souvent plus de 5 Mo.
+    var compressPhoto = function (file) {
+      return new Promise(function (resolve) {
+        var url = URL.createObjectURL(file);
+        var img = new Image();
+        img.onload = function () {
+          var scale = Math.min(1, 1600 / Math.max(img.width, img.height));
+          var canvas = document.createElement("canvas");
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+          canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+          URL.revokeObjectURL(url);
+          canvas.toBlob(resolve, "image/jpeg", 0.8);
+        };
+        img.onerror = function () {
+          URL.revokeObjectURL(url);
+          resolve(null);
+        };
+        img.src = url;
+      });
+    };
+
+    var setSending = function (sending) {
+      submitBtn.disabled = sending;
+      submitBtn.setAttribute("aria-busy", sending ? "true" : "false");
+      submitLabel.textContent = sending ? "Envoi en cours…" : "Envoyer ma demande";
+    };
+
+    var showFormError = function (message) {
+      formError.textContent = message;
+      formError.hidden = false;
+      formError.scrollIntoView({ block: "center", behavior: reduceMotion ? "auto" : "smooth" });
+    };
+
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
       if (!validate()) return;
-      var name = (form.querySelector("#nom").value || "").trim().split(" ")[0];
-      var target = success.querySelector("[data-success-name]");
-      if (target) target.textContent = name ? ", " + name : "";
-      form.hidden = true;
-      success.hidden = false;
-      success.setAttribute("tabindex", "-1");
-      success.focus();
+      formError.hidden = true;
+      setSending(true);
+      try {
+        var data = new FormData(form);
+        data.delete("photos");
+        var files = Array.prototype.slice.call(photosInput.files);
+        for (var i = 0; i < files.length; i++) {
+          var blob = await compressPhoto(files[i]);
+          if (!blob) {
+            showFormError("La photo « " + files[i].name + " » n’a pas pu être préparée. Retirez-la ou choisissez-en une autre.");
+            setSending(false);
+            return;
+          }
+          data.append("photos", blob, "photo-" + (i + 1) + ".jpg");
+        }
+        var res = await fetch(form.getAttribute("action"), { method: "POST", body: data });
+        var result = await res.json().catch(function () {
+          return {};
+        });
+        if (!res.ok) {
+          if (res.status === 422) {
+            showFormError(result.message || "Vérifiez les champs du formulaire.");
+          } else if (res.status === 429) {
+            showFormError("Trop de demandes en peu de temps. Réessayez dans une minute ou appelez-nous au " + PHONE + ".");
+          } else if (result.error === "not_configured") {
+            showFormError("L’envoi des demandes n’est pas encore activé sur cette maquette. Appelez-nous au " + PHONE + ".");
+          } else {
+            showFormError("Votre demande n’a pas pu être envoyée. Réessayez ou appelez-nous au " + PHONE + ".");
+          }
+          setSending(false);
+          return;
+        }
+        var name = (form.querySelector("#nom").value || "").trim().split(" ")[0];
+        var target = success.querySelector("[data-success-name]");
+        if (target) target.textContent = name ? ", " + name : "";
+        form.hidden = true;
+        success.hidden = false;
+        success.setAttribute("tabindex", "-1");
+        success.focus();
+      } catch (err) {
+        showFormError("Connexion impossible. Vérifiez votre réseau ou appelez-nous au " + PHONE + ".");
+        setSending(false);
+      }
     });
   }
 })();
